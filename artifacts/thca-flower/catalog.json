@@ -1,0 +1,317 @@
+{
+ "platform": "shopify",
+ "collection_title": "Thca Flower",
+ "collection_handle": "thca-flower",
+ "products": [
+  {
+   "handle": "numb-x-e420-starship-device-4000mg",
+   "title": "Numb x E420 Starship Device - 4000mg",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "big-high-thc-a-unit-5000mg",
+   "title": "Big High THC-A Device - 5000mg",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "muha-meds-thc-a-device-2000mg",
+   "title": "Muha Meds THC-A Device - 2000mg",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "small-water-pipe-colorful-5-inch",
+   "title": "Portable Two Tone Carb Bong - 5in",
+   "vendor": "",
+   "price_min": 5.99,
+   "price_max": 5.99,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "dozo-thc-a-liquid-moonrocks-device-3500mg",
+   "title": "Dozo THC-A Liquid Moonrocks Device - 3500mg",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "cookies-thc-a-unit-3000mg",
+   "title": "Cookies THC-A Unit - 3000mg",
+   "vendor": "",
+   "price_min": 26.99,
+   "price_max": 26.99,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "hidden-hills-liquid-diamonds-thc-a-mini-mart-device-1000mg",
+   "title": "Hidden Hills Liquid Diamonds THC-A Mini Mart Device - 1000mg",
+   "vendor": "",
+   "price_min": 17.99,
+   "price_max": 17.99,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "cookies-dual-chamber-unit-2000mg",
+   "title": "Cookies Dual Chamber Unit - 2000mg",
+   "vendor": "",
+   "price_min": 29.99,
+   "price_max": 29.99,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "extrax-delta-9-thc-p-unit-2000mg",
+   "title": "Extrax Delta 9 + THC-P Unit - 2000mg",
+   "vendor": "",
+   "price_min": 21.99,
+   "price_max": 21.99,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "muha-meds-thc-p-device-2000mg",
+   "title": "Muha Meds THC-P Device - 2000mg",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "select-shelf-oreo-thca-flower",
+   "title": "Select Shelf Oreo THCa Flower",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "banded-honeycomb-perc-bong",
+   "title": "Banded Honeycomb Perc Bong - 10in",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "pulse-thc-a-liquid-diamonds-unit-5000mg",
+   "title": "Pulse THC-A Liquid Diamonds Device - 5000mg",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "select-shelf-cookie-thca-flower",
+   "title": "Select Shelf Cookie THCa Flower",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "gold-leaf-plated-bong",
+   "title": "Gold Leaf Plated Bong - 9in",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "top-shelf-ice-cream-cake-thc-a-flower-3-5g",
+   "title": "Select Shelf Ice Cream Cake THCa Flower",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "triple-matrix-chamber-bong",
+   "title": "Triple Matrix Chamber Bong - 15 inches percolator bong",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "cake-liquid-live-diamonds-thc-a-device-6000mg",
+   "title": "CAKE THCa Liquid Live Diamonds THC-A Device - 6000mg",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "premium-hashburger-thca-flower",
+   "title": "Select Shelf Hashburger THCa Flower",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "straight-twin-tree-perc-bong",
+   "title": "Straight Twin Tree Perc Bong - 16in",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "muha-meds-melted-diamonds-thc-a-new-gen-3-unit-3500mg",
+   "title": "Muha Meds Melted Diamonds THC-A New Gen 3 Unit - 3500mg",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "experimental-skull-bong",
+   "title": "Experimental Skull Bong - 13in",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "muha-meds-live-resin-hhc-thc-p-new-gen-3-unit-3500mg",
+   "title": "Muha Meds Live Resin THC-P New Gen 3 Unit - 3500mg",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "double-colored-tree-perc-beaker",
+   "title": "Double Colored Tree Perc Beaker - 18in",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "glassfinity-beaker-bong-16",
+   "title": "Glassfinity Beaker Bong - 16in",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "astral-bong-16",
+   "title": "Astral Bong - 16in",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "extrax-adios-mf-thc-a-unit-7000mg",
+   "title": "Extrax Adios MF THC-A Live Sugar Device - 7000mg",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "huge-rainbow-zong-bong",
+   "title": "Huge Rainbow Zong Bong - 17in",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "huge-shotgun-bong",
+   "title": "Huge Shotgun Bong - 27in",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "cookies-blend-unit-5000mg",
+   "title": "Cookies THC-A Blend Unit - 5000mg",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  },
+  {
+   "handle": "iredescent-ak-47-bong",
+   "title": "Iridescent AK-47 Bong - 24in",
+   "vendor": "",
+   "price_min": 0.0,
+   "price_max": 0.0,
+   "grams": [],
+   "tags": [],
+   "available": true
+  }
+ ]
+}
