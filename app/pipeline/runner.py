@@ -34,6 +34,27 @@ class RunConfig:
     query: str | None = None  # default: derived from collection handle
 
 
+FURNITURE_HEADING_RE = re.compile(
+    r"^(your cart|cart|subtotal|log in|log out|login|sign in|sign up|create account|"
+    r"register|search|404\b|page not found|checkout|continue shopping|subscribe|"
+    r"newsletter|menu|close|accept all|decline|cookie|your cart is empty)\b", re.I)
+NAV_LINK_RE = re.compile(
+    r"customer_authentication|/account\b|/cart\b|/search\b|/challenge|/policies/|"
+    r"^mailto:|^tel:", re.I)
+ACRONYMS = {"thca": "THCA", "thc": "THC", "thc-a": "THCA", "thc-p": "THC-P",
+            "cbd": "CBD", "cbg": "CBG", "cbn": "CBN", "hhc": "HHC",
+            "delta-8": "Delta-8", "delta-9": "Delta-9", "delta-10": "Delta-10"}
+
+
+def pretty_title(s: str) -> str:
+    """Handle -> display title with cannabinoid acronym awareness."""
+    words = []
+    for w in s.replace("_", " ").replace("-", " ").split():
+        lw = w.lower()
+        words.append(ACRONYMS.get(lw, w.capitalize()))
+    return " ".join(words)
+
+
 class Runner:
     def __init__(self, cfg: RunConfig):
         self.cfg = cfg
@@ -255,21 +276,24 @@ class Runner:
         catalog = self._load("catalog")
 
         needs = [r["check"] for r in audit["checks"] if r["status"] in ("Needs work", "Fail")]
-        h2s = [t for lvl, t in snap["headings"] if lvl == 2]
+        h2s = [t for lvl, t in snap["headings"]
+               if lvl == 2 and not FURNITURE_HEADING_RE.match(t.strip())]
         outline = [{"heading": h, "decision": "KEEP"} for h in h2s[:12]]
-        outline.insert(0, {"heading": f"Why Buy {catalog['collection_title']} from Us?",
+        outline.insert(0, {"heading": f"Why Buy {pretty_title(catalog['collection_title'])} from Us?",
                            "decision": "ADD"})
         outline.append({"heading": "Frequently Asked Questions", "decision": "KEEP"})
 
         paa_qs = [p["question"] for p in serp.get("paa", [])]
+        q = self._query()
         faqs = paa_qs[:8] or [
-            f"What is {self._query()}?",
-            f"How much {self._query()} should I buy?",
-            f"Is {self._query()} legal?",
+            f"What is {q}?",
+            f"How much {q} should I buy?",
+            f"Is {q} legal?",
             "How is it shipped?",
         ]
         links = [{"anchor": l["anchor"], "href": l["href"], "decision": "KEEP"}
-                 for l in snap["internal_links"][:12]]
+                 for l in snap["internal_links"]
+                 if not NAV_LINK_RE.search(l["href"])][:12]
         analysis = {"outline": outline, "faqs": faqs, "internal_links": links,
                     "issues": needs, "entities_summary": entities}
         self._save("analysis", analysis)
@@ -469,9 +493,13 @@ class Runner:
         blocks.append(H2(text="Page details"))
         blocks.append(KVTable(pairs=[
             ["URL", pre["final_url"]], ["Platform", pre["platform"]],
-            ["Collection", catalog["collection_title"]],
+            ["Collection", pretty_title(catalog["collection_title"].replace("Collection:", "").strip())],
             ["Products", str(len(catalog["products"]))],
             ["Price range", f"${self._price_range(catalog)[0]:.2f} – ${self._price_range(catalog)[1]:.2f}"],
+            ["Catalog source", {"json": "store API (complete)",
+                                "crawl-grid": "rendered grid (first page only — verify counts)",
+                                "store-wide-json": "store-wide fallback (not collection-scoped)"}
+             .get(catalog.get("source", "json"), "unknown")],
             *( [["Domain Rating", f"{dr['dr']} — {dr['attribution']}"]] if dr else [] ),
         ]))
         blocks.append(H2(text="Subheadings"))
@@ -560,6 +588,6 @@ class Runner:
             *( [dr["attribution"]] if dr else [] ),
         ]))
         return PlanDocument(
-            title=f"Page plan — {catalog['collection_title']}",
-            subtitle=catalog["collection_title"],
+            title=f"Page plan — {pretty_title(catalog['collection_title'])}",
+            subtitle=pretty_title(catalog["collection_title"]),
             blocks=blocks)
