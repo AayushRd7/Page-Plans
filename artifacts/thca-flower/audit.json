@@ -1,0 +1,191 @@
+{
+ "checks": [
+  {
+   "dimension": "Title tag",
+   "check": "Length 50-60",
+   "status": "Needs work",
+   "note": "14 chars"
+  },
+  {
+   "dimension": "Title tag",
+   "check": "Query near front",
+   "status": "Needs work",
+   "note": "primary word not near front"
+  },
+  {
+   "dimension": "Title tag",
+   "check": "Not identical to H1",
+   "status": "Pass",
+   "note": ""
+  },
+  {
+   "dimension": "Title tag",
+   "check": "Uniqueness",
+   "status": "Info",
+   "note": "needs site crawl"
+  },
+  {
+   "dimension": "Meta description",
+   "check": "Exists",
+   "status": "Fail",
+   "note": "no meta description"
+  },
+  {
+   "dimension": "Header structure",
+   "check": "Exactly one H1",
+   "status": "Fail",
+   "note": "0 H1"
+  },
+  {
+   "dimension": "Header structure",
+   "check": "No skipped levels",
+   "status": "Needs work",
+   "note": "heading level jump"
+  },
+  {
+   "dimension": "Body content",
+   "check": "Word count",
+   "status": "Pass",
+   "note": "2258 words"
+  },
+  {
+   "dimension": "Body content",
+   "check": "First paragraph answers intent",
+   "status": "Needs work",
+   "note": "Have an account?"
+  },
+  {
+   "dimension": "Internal links",
+   "check": "2-3+ outbound internal",
+   "status": "Pass",
+   "note": "96 found"
+  },
+  {
+   "dimension": "Internal links",
+   "check": "Anchors descriptive",
+   "status": "Pass",
+   "note": ""
+  },
+  {
+   "dimension": "Internal links",
+   "check": "Inbound links",
+   "status": "Info",
+   "note": "needs site crawl"
+  },
+  {
+   "dimension": "Internal links",
+   "check": "No redirects/broken",
+   "status": "Info",
+   "note": "needs link checker"
+  },
+  {
+   "dimension": "Images and media",
+   "check": "Alt coverage",
+   "status": "Pass",
+   "note": "120/123"
+  },
+  {
+   "dimension": "Images and media",
+   "check": "Width/height set",
+   "status": "Pass",
+   "note": "121/123"
+  },
+  {
+   "dimension": "Images and media",
+   "check": "Lazy loading",
+   "status": "Pass",
+   "note": "116/123"
+  },
+  {
+   "dimension": "Images and media",
+   "check": "Modern formats",
+   "status": "Needs work",
+   "note": "7/123 webp/avif"
+  },
+  {
+   "dimension": "URL slug",
+   "check": "Lowercase hyphenated",
+   "status": "Pass",
+   "note": "thca-flower"
+  },
+  {
+   "dimension": "URL slug",
+   "check": "Length < 60",
+   "status": "Pass",
+   "note": "11 chars"
+  },
+  {
+   "dimension": "URL slug",
+   "check": "Query in slug",
+   "status": "Pass",
+   "note": ""
+  },
+  {
+   "dimension": "URL slug",
+   "check": "No dates/params",
+   "status": "Pass",
+   "note": ""
+  },
+  {
+   "dimension": "On-page schema",
+   "check": "Schema present",
+   "status": "Pass",
+   "note": "BreadcrumbList, Organization, Store"
+  },
+  {
+   "dimension": "On-page schema",
+   "check": "BreadcrumbList",
+   "status": "Pass",
+   "note": ""
+  },
+  {
+   "dimension": "On-page schema",
+   "check": "Rich results valid",
+   "status": "Info",
+   "note": "needs Rich Results Test"
+  }
+ ],
+ "dimension_table": [
+  [
+   "Title tag",
+   "Needs work",
+   "14 chars"
+  ],
+  [
+   "Meta description",
+   "Fail",
+   "no meta description"
+  ],
+  [
+   "Header structure",
+   "Fail",
+   "0 H1"
+  ],
+  [
+   "Body content",
+   "Needs work",
+   "Have an account?"
+  ],
+  [
+   "Internal links",
+   "Pass",
+   ""
+  ],
+  [
+   "Images and media",
+   "Needs work",
+   "7/123 webp/avif"
+  ],
+  [
+   "URL slug",
+   "Pass",
+   ""
+  ],
+  [
+   "On-page schema",
+   "Pass",
+   ""
+  ]
+ ],
+ "overall": "Fail"
+}
