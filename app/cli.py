@@ -35,12 +35,26 @@ def cmd_diff(old: str, new: str) -> None:
         print(f"{marker} {r.text!r}")
 
 
+def cmd_run(url: str, opts: list[str]) -> None:
+    from app.pipeline.runner import RunConfig, Runner
+
+    cfg = RunConfig(
+        url=url,
+        tier="pro" if "--pro" in opts else "partial" if "--partial" in opts else "hands_off",
+        paid="--paid" in opts,
+        llm="--no-llm" not in opts,
+    )
+    Runner(cfg).run()
+
+
 def main() -> None:
     args = sys.argv[1:]
     if not args or args[0] == "sample":
         cmd_sample()
     elif args[0] == "diff" and len(args) == 3:
         cmd_diff(args[1], args[2])
+    elif args[0] == "run" and len(args) >= 2:
+        cmd_run(args[1], args[2:])
     else:
         print(__doc__)
         sys.exit(1)
