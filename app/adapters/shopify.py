@@ -27,11 +27,23 @@ class ShopifyAdapter:
         if status != 200 or not data or "products" not in data:
             data = None
             if html:
-                # JSON blocked/rate-limited: parse the actual collection grid
+                # JSON blocked/rate-limited: parse the rendered collection
+                # grid, following ?page=N pagination until it runs dry
                 from app.adapters.crawl import CrawlAdapter
+                from app.fetch import fetch_text
                 products = CrawlAdapter().fetch_collection(url, html).products
                 if products:
                     source = "crawl-grid"
+                    seen = {p.handle for p in products}
+                    for n in range(2, 6):
+                        sep = "&" if "?" in url else "?"
+                        s2, _, html_n = fetch_text(f"{url}{sep}page={n}")
+                        batch = CrawlAdapter().fetch_collection(url, html_n or "").products
+                        fresh = [p for p in batch if p.handle not in seen]
+                        if not fresh:
+                            break
+                        seen.update(p.handle for p in fresh)
+                        products.extend(fresh)
             if not products:
                 # last resort: whole-store catalog (flagged, not collection-scoped)
                 status, _, data = fetch_json(f"{base}/products.json?limit=250")
