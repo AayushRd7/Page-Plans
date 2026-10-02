@@ -1,0 +1,50 @@
+{
+ "vendors": [],
+ "product_names": [
+  "Numb x E420 Starship Device - 4000mg",
+  "Big High THC-A Device - 5000mg",
+  "Muha Meds THC-A Device - 2000mg",
+  "Portable Two Tone Carb Bong - 5in",
+  "Dozo THC-A Liquid Moonrocks Device - 3500mg",
+  "Cookies THC-A Unit - 3000mg",
+  "Hidden Hills Liquid Diamonds THC-A Mini Mart Device - 1000mg",
+  "Cookies Dual Chamber Unit - 2000mg",
+  "Extrax Delta 9 + THC-P Unit - 2000mg",
+  "Muha Meds THC-P Device - 2000mg",
+  "Select Shelf Oreo THCa Flower",
+  "Banded Honeycomb Perc Bong - 10in"
+ ],
+ "strain_names": [
+  "Adios",
+  "Astral",
+  "Banded",
+  "Beaker",
+  "Blend",
+  "Bong",
+  "Cake",
+  "Carb",
+  "Chamber",
+  "Colored",
+  "Cookie",
+  "Cookies",
+  "Cream",
+  "Delta",
+  "Device",
+  "Diamonds",
+  "Double",
+  "Dozo",
+  "Dual",
+  "Experimental"
+ ],
+ "tags": [],
+ "sizes_g": [],
+ "price_range": [
+  5.99,
+  29.99
+ ],
+ "schema_types": [
+  "BreadcrumbList",
+  "Organization",
+  "Store"
+ ]
+}
