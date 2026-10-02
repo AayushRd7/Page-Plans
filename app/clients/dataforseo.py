@@ -18,17 +18,19 @@ class DataForSEOClient:
         self.auth = (login or os.environ.get("DATAFORSEO_LOGIN", ""),
                      password or os.environ.get("DATAFORSEO_PASSWORD", ""))
 
-    def _post(self, path: str, payload: list[dict]) -> dict:
+    def _post(self, path: str, payload: list[dict]) -> tuple[dict, list]:
         r = requests.post(f"{BASE}{path}", auth=self.auth, json=payload, timeout=60)
         r.raise_for_status()
         body = r.json()
         if body.get("status_code") != 20000:
             raise RuntimeError(f"DataForSEO {path}: {body.get('status_message')}")
-        return body["tasks"][0]["result"][0]
+        task = body["tasks"][0]
+        results = task.get("result") or []
+        return (results[0] if results else {}), results
 
     def serp(self, query: str, depth: int = 10) -> dict:
         """Organic results + People Also Ask, merged."""
-        res = self._post("/serp/google/organic/live/regular", [{
+        res, _ = self._post("/serp/google/organic/live/regular", [{
             "keyword": query, "location_code": 2840, "language_code": "en",
             "depth": depth, "people_also_ask": True,
         }])
@@ -42,23 +44,30 @@ class DataForSEOClient:
         return {"query": query, "organic": organic, "paa": paa}
 
     def volumes(self, keywords: list[str]) -> dict:
-        res = self._post("/keywords_data/google_ads/search_volume/live", [{
+        _, rows = self._post("/keywords_data/google_ads/search_volume/live", [{
             "keywords": keywords[:1000], "location_code": 2840, "language_code": "en",
         }])
         out = {}
-        for row in res.get("keywords", []) or []:
-            out[row.get("keyword", "").lower()] = {
+        for row in rows:
+            out[(row.get("keyword") or "").lower()] = {
                 "volume": row.get("search_volume", 0),
-                "cpc": row.get("cpc", 0),
-                "competition": row.get("competition", 0),
+                "cpc": row.get("cpc"),
+                "competition": row.get("competition"),
+                "competition_index": row.get("competition_index"),
             }
         return out
 
     def related_keywords(self, query: str, limit: int = 30) -> list[dict]:
-        res = self._post("/dataforseo_labs/google/related_keywords/live", [{
+        res, _ = self._post("/dataforseo_labs/google/related_keywords/live", [{
             "keyword": query, "location_code": 2840, "language_code": "en",
             "limit": limit,
         }])
         items = res.get("items") or []
-        return [{"keyword": i.get("keyword"), "volume": i.get("search_volume", 0)}
-                for i in items]
+        out = []
+        seen = set()
+        for i in items:
+            for kw in i.get("related_keywords") or []:
+                if kw and kw.lower() not in seen:
+                    seen.add(kw.lower())
+                    out.append({"keyword": kw, "volume": None})
+        return out[:limit]
