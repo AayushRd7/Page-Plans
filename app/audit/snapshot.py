@@ -32,8 +32,19 @@ class PageSnapshot:
     has_breadcrumb_schema: bool = False
 
 
-def snapshot_from_html(html: str, url: str) -> PageSnapshot:
+def snapshot_from_html(html: str, url: str, main_only: bool = True) -> PageSnapshot:
+    """main_only: extract from the main content region when one exists.
+
+    Store themes bury the real copy inside <main>, <article>, or the element
+    with role="main"; body-wide extraction picks up cart drawers, nav and
+    footer furniture as if it were content.
+    """
     soup = BeautifulSoup(html, "html.parser")
+    if main_only:
+        region = (soup.find("main") or soup.find("article")
+                  or soup.find(attrs={"role": "main"})
+                  or soup.find("body") or soup)
+        soup = BeautifulSoup(str(region), "html.parser")
     parsed = urlparse(url)
     snap = PageSnapshot(url=url, slug=parsed.path.strip("/").split("/")[-1] or "/")
 
