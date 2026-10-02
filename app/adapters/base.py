@@ -27,6 +27,7 @@ class Catalog:
     collection_title: str
     collection_handle: str
     products: list[Product] = field(default_factory=list)
+    source: str = "json"   # json | crawl-grid | store-wide-json
 
     @property
     def price_range(self) -> tuple[float, float]:
