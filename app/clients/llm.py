@@ -30,22 +30,30 @@ def chat(messages: list[dict], model: str | None = None,
          response_format: dict | None = None) -> str:
     key = api_key or os.environ.get("OPENROUTER_API_KEY", "")
     model = model or os.environ.get("OPENROUTER_MODEL", "deepseek/deepseek-chat")
-    r = requests.post("https://openrouter.ai/api/v1/chat/completions",
-                      headers={"Authorization": f"Bearer {key}"},
-                      json={"model": model, "messages": messages,
-                            "max_tokens": max_tokens,
-                            "reasoning": {"max_tokens": 1500},
-                            **({"response_format": response_format} if response_format else {})},
-                      timeout=300)
-    r.raise_for_status()
-    payload = r.json()
-    choice = payload["choices"][0]
-    content = choice["message"].get("content")
-    if content is None:
-        raise RuntimeError(
+    # Reasoning-model budget roulette: some provider routes ignore the
+    # reasoning cap and burn the whole completion budget on thinking.
+    # Escalate max_tokens on each empty-content retry.
+    budget = max_tokens
+    last_err = None
+    for _ in range(3):
+        r = requests.post("https://openrouter.ai/api/v1/chat/completions",
+                          headers={"Authorization": f"Bearer {key}"},
+                          json={"model": model, "messages": messages,
+                                "max_tokens": budget,
+                                "reasoning": {"max_tokens": 1500},
+                                **({"response_format": response_format} if response_format else {})},
+                          timeout=300)
+        r.raise_for_status()
+        payload = r.json()
+        choice = payload["choices"][0]
+        content = choice["message"].get("content")
+        if content:
+            return content
+        last_err = RuntimeError(
             f"model returned empty content (finish={choice.get('finish_reason')}, "
             f"usage={payload.get('usage')})")
-    return content
+        budget *= 2
+    raise last_err
 
 
 def draft_collection_copy(brief: dict) -> dict:
