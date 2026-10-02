@@ -35,12 +35,28 @@ Done (this commit):
       highlight geometry, new text from the client paste-ready txt, counts matching
       the sample's own ADDED/REMOVED labels.
 
+- [x] Store adapters (`app/adapters/`): Shopify public JSON -> WooCommerce Store API
+      -> universal crawl fallback; auto-detection; per-collection scoping with
+      flagged store-wide fallback
+- [x] DataForSEO client (SERP + PAA, keyword volumes, labs related) with
+      heuristic fallback when unpaid/unconfigured (`app/clients/dataforseo.py`)
+- [x] Ahrefs free DR client with required attribution (`app/clients/ahrefs.py`)
+- [x] OpenRouter drafting with humanizer system rules baked into the prompt
+      (`app/clients/llm.py`); pre-publish checklist gate on every draft
+- [x] 8-dimension on-page audit as a pipeline stage (`app/audit/`), wired between
+      crawl and drafting
+- [x] Headless pipeline core: URL -> DOCX + PDF + paste-ready TXT
+      (`app/pipeline/runner.py`). Verified end-to-end live against
+      everythingfor420.com (Shopify, soft-404 serving, rate limits) — preflight
+      outcome taxonomy incl. soft-404 accommodation, in-memory stage handoff
+      (disk artifacts can be TTL-reaped between stages; runs must not depend
+      on their survival)
+- [x] Browser-fallback fetcher: requests first, headless Chromium with scroll
+      for lazy grids on 429/blocks (`app/fetch.py`)
+
 Next:
-- [ ] Store adapters (Shopify / WooCommerce / crawl)
-- [ ] DataForSEO client (SERP, Keywords, Labs, Content Analysis, On-Page)
 - [ ] GSC OAuth connect flow
-- [ ] Ahrefs free DR client (+ attribution line, already in template)
-- [ ] LLM stage prompts (OpenRouter), humanizer pass on drafts
+- [ ] Business Data API as automated review fallback
 - [ ] FastAPI app + worker + Postgres + queue
 - [ ] Tier 2 approval screens (keywords, outline, claims)
 - [ ] Tier 3 stage editor + override-to-rule promotion
@@ -50,7 +66,18 @@ Next:
 ```bash
 pip install -r requirements.txt
 playwright install chromium   # if not already present
-python -m app.cli sample      # renders out/thca_sample.pdf/.docx + paste-ready txt
+
+# reference sample (frozen AS-IS format)
+python -m app.cli sample
+
+# headless pipeline: collection URL -> plan
+python -m app.cli run https://store.com/collections/thca-flower \
+    [--paid]        # enable DataForSEO live volumes + SERP (else heuristic)
+    [--partial]     # tier: gates on keywords/analysis/drafting
+    [--pro]         # tier: all gates (headless runs auto-approve, logged)
+    [--no-llm]      # deterministic fallback drafts instead of OpenRouter
+# writes out/<handle>_plan.pdf / .docx / _paste_ready.txt
+# per-stage artifacts land in artifacts/<handle>/ for re-runs and debugging
 ```
 
 ## Environment
