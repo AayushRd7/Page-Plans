@@ -416,7 +416,15 @@ class Runner:
     def _query(self) -> str:
         if self.cfg.query:
             return self.cfg.query
-        return collection_handle_from_url(self.cfg.url).replace("-", " ")
+        tokens = collection_handle_from_url(self.cfg.url).split("-")
+        # merge single-letter tokens: thc-a-flower -> thca flower
+        merged = []
+        for t in tokens:
+            if len(t) == 1 and merged:
+                merged[-1] += t
+            else:
+                merged.append(t)
+        return " ".join(merged)
 
     @staticmethod
     def _gram_sizes(catalog: dict) -> list[float]:
@@ -442,8 +450,15 @@ class Runner:
 
     def _llm_draft(self, brief: dict) -> dict:
         from app.clients.llm import draft_collection_copy
-        draft = draft_collection_copy(brief)
-        return draft
+        try:
+            return draft_collection_copy(brief)
+        except Exception as exc:
+            self.decisions.append(f"LLM draft failed ({str(exc)[:120]}); retrying once")
+            try:
+                return draft_collection_copy(brief)
+            except Exception:
+                self.decisions.append("LLM retry failed; deterministic fallback draft")
+                return self._fallback_draft(brief)
 
     def _fallback_draft(self, brief: dict) -> dict:
         q = brief["query"].title()
@@ -530,7 +545,7 @@ class Runner:
             ["Products", str(len(catalog["products"]))],
             ["Price range", f"${self._price_range(catalog)[0]:.2f} – ${self._price_range(catalog)[1]:.2f}"],
             ["Catalog source", {"json": "store API (complete)",
-                                "crawl-grid": "rendered grid (first page only — verify counts)",
+                                "crawl-grid": "rendered grid (paginated up to 5 pages)",
                                 "store-wide-json": "store-wide fallback (not collection-scoped)"}
              .get(catalog.get("source", "json"), "unknown")],
             *( [["Domain Rating", f"{dr['dr']} — {dr['attribution']}"]] if dr else [] ),
