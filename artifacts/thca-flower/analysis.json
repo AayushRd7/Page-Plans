@@ -1,0 +1,155 @@
+{
+ "outline": [
+  {
+   "heading": "Why Buy Thca Flower from Us?",
+   "decision": "ADD"
+  },
+  {
+   "heading": "Your Cart",
+   "decision": "KEEP"
+  },
+  {
+   "heading": "Your cart is empty",
+   "decision": "KEEP"
+  },
+  {
+   "heading": "Subtotal (0\n                 item)",
+   "decision": "KEEP"
+  },
+  {
+   "heading": "404 - Page not found",
+   "decision": "KEEP"
+  },
+  {
+   "heading": "Frequently Asked Questions",
+   "decision": "KEEP"
+  }
+ ],
+ "faqs": [
+  "What is thca flower?",
+  "How much thca flower should I buy?",
+  "Is thca flower legal?",
+  "How is it shipped?"
+ ],
+ "internal_links": [
+  {
+   "anchor": "Continue shopping",
+   "href": "/collections/all",
+   "decision": "KEEP"
+  },
+  {
+   "anchor": "Log in",
+   "href": "https://everythingfor420.com/customer_authentication/redirect?locale=en&region_country=US",
+   "decision": "KEEP"
+  },
+  {
+   "anchor": "Numb x E420 Starship Device - 4000mg",
+   "href": "/products/numb-x-e420-starship-device-4000mg",
+   "decision": "KEEP"
+  },
+  {
+   "anchor": "Big High THC-A Device - 5000mg",
+   "href": "/products/big-high-thc-a-unit-5000mg",
+   "decision": "KEEP"
+  },
+  {
+   "anchor": "Muha Meds THC-A Device - 2000mg",
+   "href": "/products/muha-meds-thc-a-device-2000mg",
+   "decision": "KEEP"
+  },
+  {
+   "anchor": "Portable Two Tone Carb Bong - 5in",
+   "href": "/products/small-water-pipe-colorful-5-inch",
+   "decision": "KEEP"
+  },
+  {
+   "anchor": "Dozo THC-A Liquid Moonrocks Device - 3500mg",
+   "href": "/products/dozo-thc-a-liquid-moonrocks-device-3500mg",
+   "decision": "KEEP"
+  },
+  {
+   "anchor": "Cookies THC-A Unit - 3000mg",
+   "href": "/products/cookies-thc-a-unit-3000mg",
+   "decision": "KEEP"
+  },
+  {
+   "anchor": "Hidden Hills Liquid Diamonds THC-A Mini Mart Device - 1000mg",
+   "href": "/products/hidden-hills-liquid-diamonds-thc-a-mini-mart-device-1000mg",
+   "decision": "KEEP"
+  },
+  {
+   "anchor": "Cookies Dual Chamber Unit - 2000mg",
+   "href": "/products/cookies-dual-chamber-unit-2000mg",
+   "decision": "KEEP"
+  },
+  {
+   "anchor": "Extrax Delta 9 + THC-P Unit - 2000mg",
+   "href": "/products/extrax-delta-9-thc-p-unit-2000mg",
+   "decision": "KEEP"
+  },
+  {
+   "anchor": "Muha Meds THC-P Device - 2000mg",
+   "href": "/products/muha-meds-thc-p-device-2000mg",
+   "decision": "KEEP"
+  }
+ ],
+ "issues": [
+  "Length 50-60",
+  "Query near front",
+  "Exists",
+  "Exactly one H1",
+  "No skipped levels",
+  "First paragraph answers intent",
+  "Modern formats"
+ ],
+ "entities_summary": {
+  "vendors": [],
+  "product_names": [
+   "Numb x E420 Starship Device - 4000mg",
+   "Big High THC-A Device - 5000mg",
+   "Muha Meds THC-A Device - 2000mg",
+   "Portable Two Tone Carb Bong - 5in",
+   "Dozo THC-A Liquid Moonrocks Device - 3500mg",
+   "Cookies THC-A Unit - 3000mg",
+   "Hidden Hills Liquid Diamonds THC-A Mini Mart Device - 1000mg",
+   "Cookies Dual Chamber Unit - 2000mg",
+   "Extrax Delta 9 + THC-P Unit - 2000mg",
+   "Muha Meds THC-P Device - 2000mg",
+   "Select Shelf Oreo THCa Flower",
+   "Banded Honeycomb Perc Bong - 10in"
+  ],
+  "strain_names": [
+   "Adios",
+   "Astral",
+   "Banded",
+   "Beaker",
+   "Blend",
+   "Bong",
+   "Cake",
+   "Carb",
+   "Chamber",
+   "Colored",
+   "Cookie",
+   "Cookies",
+   "Cream",
+   "Delta",
+   "Device",
+   "Diamonds",
+   "Double",
+   "Dozo",
+   "Dual",
+   "Experimental"
+  ],
+  "tags": [],
+  "sizes_g": [],
+  "price_range": [
+   5.99,
+   29.99
+  ],
+  "schema_types": [
+   "BreadcrumbList",
+   "Organization",
+   "Store"
+  ]
+ }
+}
