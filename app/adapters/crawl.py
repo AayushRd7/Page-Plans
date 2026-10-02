@@ -37,4 +37,5 @@ class CrawlAdapter:
                 price_max=max(prices) if prices else 0.0,
             )
         return Catalog(platform=self.platform, collection_title=title,
-                       collection_handle=handle, products=list(products.values()))
+                       collection_handle=handle, products=list(products.values()),
+                       source="crawl-grid")
