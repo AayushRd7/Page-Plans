@@ -39,6 +39,9 @@ def snapshot_from_html(html: str, url: str) -> PageSnapshot:
 
     t = soup.find("title")
     snap.title = t.get_text(strip=True) if t else ""
+    # soft-404 stores prefix "404 Not Found" into the real title; normalize
+    snap.title = re.sub(r"^404\s+not\s+found\s*[—\-:|]*\s*", "", snap.title,
+                        flags=re.I).strip()
     md = soup.find("meta", attrs={"name": re.compile(r"^description$", re.I)})
     snap.meta_desc = (md.get("content") or "").strip() if md else ""
 
