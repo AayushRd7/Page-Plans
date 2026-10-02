@@ -22,7 +22,7 @@ class ShopifyAdapter:
         if status == 200 and data and "collection" in data:
             title = data["collection"].get("title") or title
 
-        store_wide = False
+        store_wide, source = False, "json"
         status, _, data = fetch_json(f"{base}/collections/{handle}/products.json?limit=250")
         if status != 200 or not data or "products" not in data:
             data = None
@@ -30,14 +30,18 @@ class ShopifyAdapter:
                 # JSON blocked/rate-limited: parse the actual collection grid
                 from app.adapters.crawl import CrawlAdapter
                 products = CrawlAdapter().fetch_collection(url, html).products
+                if products:
+                    source = "crawl-grid"
             if not products:
                 # last resort: whole-store catalog (flagged, not collection-scoped)
                 status, _, data = fetch_json(f"{base}/products.json?limit=250")
                 store_wide = status == 200 and bool(data)
+                if store_wide:
+                    source = "store-wide-json"
         if data and data.get("products"):
             products = [self._norm(p) for p in data["products"]]
         cat = Catalog(platform=self.platform, collection_title=title,
-                      collection_handle=handle, products=products)
+                      collection_handle=handle, products=products, source=source)
         if store_wide:
             cat.collection_title += " (store-wide fallback)"
         return cat
