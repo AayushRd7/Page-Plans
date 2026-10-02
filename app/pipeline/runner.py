@@ -102,20 +102,53 @@ class Runner:
         return Path(report)
 
     # -- stages -----------------------------------------------------------
+    @staticmethod
+    def _looks_like_collection(html: str, handle: str) -> bool:
+        """Distinguish a real collection page from a 404 template that merely
+        lists recommended products. Collection signals: an H1 naming the
+        collection, a canonical pointing at /collections/<handle>, or
+        og:type product.group."""
+        if not html:
+            return False
+        from bs4 import BeautifulSoup
+        soup = BeautifulSoup(html, "html.parser")
+        h1 = soup.find("h1")
+        if h1 and "collection" in h1.get_text().lower():
+            return True
+        canonical = soup.find("link", rel="canonical")
+        if canonical and f"/collections/{handle}" in (canonical.get("href") or ""):
+            return True
+        og = soup.find("meta", property="og:type")
+        if og and (og.get("content") or "") == "product.group":
+            return True
+        return False
+
     def _stage_preflight(self):
-        status, final_url, html = fetch_text(self.cfg.url)
-        original = self.cfg.url.rstrip("/")
-        outcome, notes = Outcome.OK, []
-        if status == 404:
-            # soft-404 accommodation: some stores serve the full collection
-            # grid with a 404 status under bot pressure. Real 404s have no
-            # product grid.
-            product_links = len(set(re.findall(r'href="(/products?/[\w-]+)', html or "")))
-            if product_links >= 5:
-                outcome, notes = Outcome.OK, [
-                    f"soft-404: HTTP {status} but {product_links} product links present; verify manually"]
-            else:
-                outcome = Outcome.NOT_FOUND
+        # the target store flip-flops between the real page and its 404
+        # template under bot pressure: retry before accepting a failure
+        handle = collection_handle_from_url(self.cfg.url)
+        html, final_url, status, outcome, notes = "", self.cfg.url, 0, Outcome.OK, []
+        for attempt in range(3):
+            status, final_url, html = fetch_text(self.cfg.url)
+            original = self.cfg.url.rstrip("/")
+            outcome, notes = Outcome.OK, []
+            if status == 404:
+                if self._looks_like_collection(html, handle):
+                    notes = [f"soft-404 serving (attempt {attempt + 1}): HTTP 404 "
+                             f"but collection signals present"]
+                else:
+                    outcome = Outcome.NOT_FOUND
+            elif status in (401, 403):
+                outcome = Outcome.INACCESSIBLE
+            elif not html or len(html) < 500:
+                outcome = Outcome.INACCESSIBLE
+            elif final_url.rstrip("/") != original:
+                notes = [f"final URL: {final_url}"]
+            if outcome == Outcome.OK or attempt == 2:
+                break
+            time.sleep(5 * (attempt + 1))
+        if outcome == Outcome.NOT_FOUND and self._looks_like_collection(html, handle):
+            outcome, notes = Outcome.OK, notes + ["collection signals found on final attempt"]
         elif status in (401, 403):
             outcome = Outcome.INACCESSIBLE
         elif not html or len(html) < 500:
@@ -525,7 +558,8 @@ class Runner:
         ]))
         blocks.append(H2(text="Keyword research"))
         if kw.get("status") == "live":
-            rows = [[k, str(v.get("volume", 0)), f"{v.get('competition', 0):.2f}"]
+            rows = [[k, str(v.get("volume") or "—"),
+                     str(v.get("competition") or v.get("competition_index") or "—")]
                     for k, v in list(kw.get("volumes", {}).items())[:15]]
             blocks.append(Table(header=["Keyword", "Volume", "Competition"], rows=rows))
         else:
