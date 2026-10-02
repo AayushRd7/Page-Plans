@@ -44,10 +44,14 @@ def snapshot_from_html(html: str, url: str, main_only: bool = True) -> PageSnaps
         region = (soup.find("main") or soup.find("article")
                   or soup.find(attrs={"role": "main"})
                   or soup.find("body") or soup)
-        soup = BeautifulSoup(str(region), "html.parser")
+        region_soup = BeautifulSoup(str(region), "html.parser")
+    else:
+        region_soup = soup
     parsed = urlparse(url)
     snap = PageSnapshot(url=url, slug=parsed.path.strip("/").split("/")[-1] or "/")
 
+    # head-level elements always come from the full document — they live
+    # outside <main> and would vanish under region extraction
     t = soup.find("title")
     snap.title = t.get_text(strip=True) if t else ""
     # soft-404 stores prefix "404 Not Found" into the real title; normalize
@@ -56,7 +60,7 @@ def snapshot_from_html(html: str, url: str, main_only: bool = True) -> PageSnaps
     md = soup.find("meta", attrs={"name": re.compile(r"^description$", re.I)})
     snap.meta_desc = (md.get("content") or "").strip() if md else ""
 
-    for h in soup.find_all(re.compile("^h[1-6]$")):
+    for h in region_soup.find_all(re.compile("^h[1-6]$")):
         level = int(h.name[1])
         text = h.get_text(" ", strip=True)
         if level == 1:
@@ -81,7 +85,7 @@ def snapshot_from_html(html: str, url: str, main_only: bool = True) -> PageSnaps
 
     host = parsed.netloc
     seen = set()
-    for a in soup.find_all("a", href=True):
+    for a in region_soup.find_all("a", href=True):
         href = a["href"].split("#")[0]
         if not href or href.startswith(("mailto:", "tel:", "javascript:")):
             continue
@@ -95,7 +99,7 @@ def snapshot_from_html(html: str, url: str, main_only: bool = True) -> PageSnaps
         seen.add(key)
         snap.internal_links.append({"href": href, "anchor": anchor})
 
-    for img in soup.find_all("img"):
+    for img in region_soup.find_all("img"):
         src = img.get("src") or img.get("data-src") or ""
         snap.images.append({
             "src": src,
@@ -105,9 +109,9 @@ def snapshot_from_html(html: str, url: str, main_only: bool = True) -> PageSnaps
             "modern": src.lower().split("?")[0].endswith(MODERN_IMG),
         })
 
-    for bad in soup(["script", "style", "noscript"]):
+    for bad in region_soup(["script", "style", "noscript"]):
         bad.decompose()
-    body = soup.body or soup
+    body = region_soup.body or region_soup
     snap.body_text = " ".join(body.get_text(" ", strip=True).split())
     snap.word_count = len(snap.body_text.split())
     p = (body.find("p") or body).get_text(" ", strip=True) if body else ""
